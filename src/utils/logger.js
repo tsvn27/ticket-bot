@@ -14,6 +14,11 @@ function printReady(tag, guilds) {
     console.log(chalk.gray(`  Servers: ${guilds}`));
 }
 
+function printLoaded(type, items) {
+    if (items.length === 0) return;
+    console.log(chalk.green(`✓ ${type}: ${items.length}`));
+}
+
 const log = {
     info: (msg) => console.log(chalk.blue(`[INFO] ${msg}`)),
     success: (msg) => console.log(chalk.green(`[OK] ${msg}`)),
@@ -22,4 +27,4 @@ const log = {
     debug: (msg) => console.log(chalk.gray(`[DEBUG] ${msg}`))
 };
 
-module.exports = { printBanner, printSection, printReady, log };
+module.exports = { printBanner, printSection, printReady, printLoaded, log };

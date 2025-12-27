@@ -33,10 +33,6 @@ module.exports = {
             if (interaction.isButton()) {
                 const customId = interaction.customId;
                 
-                if (customId.startsWith('botconfig_')) {
-                    return botconfig.handleButton(interaction, client);
-                }
-                
                 if (customId.startsWith('ticket_') || customId.startsWith('open_ticket_') || customId.startsWith('rating_') || customId.startsWith('quick_')) {
                     return handleTicketButton(interaction, client);
                 }
@@ -48,6 +44,10 @@ module.exports = {
 
             if (interaction.isAnySelectMenu()) {
                 const customId = interaction.customId;
+                
+                if (customId === 'botconfig_select') {
+                    return botconfig.handleSelect(interaction, client);
+                }
                 
                 if (customId.startsWith('ticket_')) {
                     return handleTicketSelect(interaction, client);

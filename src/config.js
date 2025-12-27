@@ -1,6 +1,6 @@
 module.exports = {
     colors: {
-        primary: 0x5865F2,
+        primary: 0xFFFFFF,
         success: 0x57F287,
         warning: 0xFEE75C,
         danger: 0xED4245,
