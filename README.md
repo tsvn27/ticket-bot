@@ -323,5 +323,6 @@ npm run reset-db       # Resetar database (cuidado!)
 ## 📄 Licença
 
 Este projeto está sob a licença MIT.
-#   a  
+#   a 
+ 
  # a
