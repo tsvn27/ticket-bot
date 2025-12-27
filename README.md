@@ -77,7 +77,7 @@ pnpm install
 
 ### 3. Configure as variáveis de ambiente
 
-Crie um arquivo `.env.local` na raiz do projeto:
+Crie um arquivo `.env` na raiz do projeto:
 
 ```env
 # Bot API (seu bot Discord)
@@ -248,3 +248,4 @@ pnpm lint     # Verificar código
 ## 📄 Licença
 
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
