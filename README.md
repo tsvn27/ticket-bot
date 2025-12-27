@@ -1,315 +1,240 @@
-# 🎫 Ticket Bot
+# 🎫 Ticket Bot Dashboard
 
-Sistema de tickets completo para Discord com MongoDB e API REST integrada.
+Dashboard web moderno para gerenciamento de tickets do Discord, construído com Next.js 16 e integrado com bot Discord.
 
-![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=flat-square&logo=node.js)
-![Discord.js](https://img.shields.io/badge/Discord.js-14-5865F2?style=flat-square&logo=discord)
-![MongoDB](https://img.shields.io/badge/MongoDB-6+-47A248?style=flat-square&logo=mongodb)
-![Fastify](https://img.shields.io/badge/Fastify-4-000000?style=flat-square&logo=fastify)
+![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38B2AC?style=flat-square&logo=tailwind-css)
 
-## 🌐 Dashboard Web (Opcional)
+## ⚠️ Requisito Obrigatório
 
-O bot funciona perfeitamente sozinho, mas se quiser uma experiência mais completa com interface visual, tem um dashboard web disponível:
+Este dashboard **requer** o bot Discord para funcionar. O site se comunica diretamente com a API do bot para buscar e gerenciar todos os dados.
 
-👉 **[Ticket Dashboard - Repositório](https://github.com/tsvn27/ticket-dashboard)**
+👉 **[Ticket Bot - Repositório do Bot](https://github.com/tsvn27/ticket-bot)**
 
-Com ele você consegue:
-- Visualizar estatísticas e gráficos em tempo real
-- Gerenciar tickets pelo navegador
-- Ver transcripts completos
-- Configurar painéis visualmente
-- Acompanhar ranking de atendentes
+O bot é completo e inclui:
+- Sistema de tickets com painéis personalizáveis
+- Múltiplas opções de categorias por painel
+- Sistema de transcripts automático
+- Avaliação de atendimento
+- Ranking de atendentes
+- Logs detalhados
 - E muito mais!
 
 ## ✨ Funcionalidades
 
-- **Sistema de Tickets** - Abertura, fechamento e gerenciamento completo
-- **Múltiplos Painéis** - Até 10 painéis com opções personalizadas
-- **Modo Canal/Thread** - Escolha entre criar canais ou threads
-- **Transcripts** - Salva automaticamente o histórico no MongoDB
-- **Avaliação** - Sistema de rating ao fechar tickets
-- **Horário de Atendimento** - Configure dias e horários de funcionamento
-- **Auto-Close** - Fecha tickets inativos automaticamente
-- **Logs** - Registro de todas as ações no Discord e MongoDB
-- **API REST** - Integração com dashboard via Fastify
-- **WebSocket** - Atualizações em tempo real
+- **Dashboard Completo** - Estatísticas em tempo real, gráficos e métricas
+- **Gerenciamento de Tickets** - Visualizar, filtrar e acompanhar todos os tickets
+- **Sistema de Transcripts** - Histórico completo de mensagens de cada ticket
+- **Painéis Configuráveis** - Criar e editar painéis de tickets com múltiplas opções
+- **Ranking de Atendentes** - Acompanhar performance da equipe de suporte
+- **Logs de Atividade** - Histórico detalhado de todas as ações
+- **Autenticação Discord** - Login seguro via OAuth2
+- **Sincronização em Tempo Real** - Dados atualizados automaticamente com o bot
 
-## 📋 Requisitos
+### Dashboard Principal
+- Cards de estatísticas com sparklines
+- Gráfico de tickets por dia (semana/mês)
+- Top 3 atendentes do mês
+- Tickets recentes com acesso rápido
 
-- Node.js 18+
-- MongoDB Atlas (ou local)
-- Bot Discord com intents habilitados
+### Gerenciamento de Tickets
+- Tabela com filtros (todos/abertos/fechados)
+- Visualização de transcripts
+- Download de histórico
+
+### Editor de Painéis
+- Configurações gerais (nome, modo, categoria)
+- Opções de ticket (até 25)
+- Mensagens personalizadas
+- Horário de atendimento
+- Preferências (transcripts, DM, avaliação, auto-close)
+- Estilos de exibição (botões/select)
+- Integração com IA
 
 ## 🚀 Instalação
+
+### Pré-requisitos
+
+- Node.js 18+
+- pnpm (recomendado) ou npm
+- Bot Discord configurado e rodando
+- MongoDB Atlas (compartilhado com o bot)
 
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/tsvn27/ticket-bot.git
-cd ticket-bot
+git clone https://github.com/tsvn27/ticket-dashboard.git
+cd ticket-dashboard
 ```
 
 ### 2. Instale as dependências
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### 3. Configure as variáveis de ambiente
 
-Crie um arquivo `.env` na raiz do projeto:
+Crie um arquivo `.env.local` na raiz do projeto:
 
 ```env
-DISCORD_TOKEN=seu_token_aqui
-MONGODB_URI=mongodb+srv://usuario:senha@cluster.mongodb.net/tickets
-GUILD_ID=id_do_servidor
+# Bot API (seu bot Discord)
+BOT_API_URL=http://localhost:3001
 API_SECRET=sua_chave_secreta
-API_PORT=3001
+
+# Discord OAuth2
+DISCORD_CLIENT_ID=seu_client_id
+DISCORD_CLIENT_SECRET=seu_client_secret
+DISCORD_REDIRECT_URI=http://localhost:3000/api/auth/callback
+
+# Guild ID do servidor Discord
+GUILD_ID=seu_guild_id
+
+# (Opcional) ID do dono do dashboard - deixe vazio para permitir qualquer usuário autenticado
+DASHBOARD_OWNER_ID=
 ```
 
-### 4. Inicie o bot
+### 4. Configure o Discord OAuth2
+
+1. Acesse o [Discord Developer Portal](https://discord.com/developers/applications)
+2. Selecione sua aplicação (ou crie uma nova)
+3. Vá em **OAuth2** > **General**
+4. Adicione a Redirect URI: `http://localhost:3000/api/auth/callback`
+5. Copie o **Client ID** e **Client Secret**
+
+### 5. Inicie o servidor de desenvolvimento
 
 ```bash
-npm start
+pnpm dev
 ```
 
-## ⚙️ Variáveis de Ambiente
+Acesse [http://localhost:3000](http://localhost:3000)
 
-| Variável | Descrição |
-|----------|-----------|
-| `DISCORD_TOKEN` | Token do bot Discord |
-| `MONGODB_URI` | URI de conexão MongoDB |
-| `GUILD_ID` | ID do servidor Discord |
-| `API_SECRET` | Chave secreta para API |
-| `API_PORT` | Porta da API (padrão: 3001) |
+## 🔧 Configuração do Bot
 
-## 🤖 Comandos
+O dashboard se comunica com o bot através de uma API REST. O bot precisa expor os seguintes endpoints:
 
-| Comando | Descrição |
-|---------|-----------|
-| `/painel` | Abre o gerenciador de painéis |
-| `/botconfig` | Configurações do bot (nome, foto, status) |
+### Endpoints Necessários
+
+| Método | Endpoint | Descrição |
+|--------|----------|-----------|
+| GET | `/tickets` | Lista todos os tickets |
+| GET | `/tickets/:id/transcript` | Retorna transcript do ticket |
+| GET | `/panels` | Lista todos os painéis |
+| GET | `/panels/:id` | Detalhes de um painel |
+| PUT | `/panels/:id` | Atualiza um painel |
+| POST | `/panels` | Cria novo painel |
+| DELETE | `/panels/:id` | Remove um painel |
+| GET | `/attendants` | Lista atendentes |
+| GET | `/logs` | Lista logs de atividade |
+| GET | `/settings` | Configurações gerais |
+| PUT | `/settings` | Atualiza configurações |
+| GET | `/stats` | Estatísticas gerais |
+
+### Autenticação da API
+
+Todas as requisições devem incluir o header:
+```
+X-API-Secret: sua_chave_secreta
+```
+
+### Estrutura do Transcript
+
+O bot deve salvar transcripts no MongoDB antes de deletar o canal:
+
+```javascript
+// Coleção: transcripts
+{
+  channelId: "123456789",
+  ticketId: 1,
+  messages: [
+    {
+      id: "msg_id",
+      author: {
+        id: "user_id",
+        username: "usuario",
+        displayName: "Nome",
+        avatar: "url_avatar",
+        bot: false
+      },
+      content: "Mensagem",
+      timestamp: "2024-01-01T00:00:00.000Z",
+      attachments: [],
+      embeds: []
+    }
+  ],
+  savedAt: Date.now()
+}
+```
 
 ## 📁 Estrutura do Projeto
 
 ```
-ticket-bot/
-├── src/
-│   ├── api/                    # API REST (Fastify + WebSocket)
-│   │   └── server.js
-│   ├── commands/               # Comandos slash
-│   │   ├── botconfig.js
-│   │   └── panel.js
-│   ├── database/               # MongoDB + Mongoose
-│   │   ├── models/             # Schemas do banco
-│   │   │   ├── Attendant.js
-│   │   │   ├── DeployedPanel.js
-│   │   │   ├── Log.js
-│   │   │   ├── Panel.js
-│   │   │   ├── Settings.js
-│   │   │   ├── Ticket.js
-│   │   │   └── Transcript.js
-│   │   ├── compat.js           # Camada de compatibilidade
-│   │   ├── connection.js
-│   │   └── index.js
-│   ├── events/                 # Eventos Discord
-│   │   ├── interactionCreate.js
-│   │   └── ready.js
-│   ├── handlers/               # Loaders
-│   │   ├── commandHandler.js
-│   │   └── eventHandler.js
-│   ├── modules/
-│   │   ├── panel/              # Gerenciamento de painéis
-│   │   │   ├── handlers.js
-│   │   │   └── views.js
-│   │   └── tickets/            # Sistema de tickets
-│   │       ├── deploy.js
-│   │       └── handlers.js
-│   ├── utils/                  # Utilitários
-│   │   ├── autoclose.js
-│   │   ├── logger.js
-│   │   ├── permissions.js
-│   │   └── syncAttendants.js
-│   ├── config.js
-│   └── index.js
-├── .env
-├── package.json
-└── README.md
+ticket-dashboard/
+├── app/
+│   ├── api/                    # Rotas da API
+│   │   ├── auth/               # Autenticação Discord
+│   │   ├── attendants/         # Atendentes
+│   │   ├── logs/               # Logs
+│   │   ├── panels/             # Painéis
+│   │   ├── settings/           # Configurações
+│   │   ├── stats/              # Estatísticas
+│   │   └── tickets/            # Tickets
+│   ├── atendentes/             # Página de atendentes
+│   ├── configuracoes/          # Página de configurações
+│   ├── login/                  # Página de login
+│   ├── logs/                   # Página de logs
+│   ├── paineis/                # Páginas de painéis
+│   ├── tickets/                # Página de tickets
+│   ├── layout.tsx              # Layout principal
+│   └── page.tsx                # Dashboard
+├── components/
+│   ├── dashboard/              # Componentes do dashboard
+│   │   ├── header.tsx          # Header com busca
+│   │   ├── sidebar.tsx         # Menu lateral
+│   │   ├── stat-card.tsx       # Cards de estatísticas
+│   │   ├── weekly-chart.tsx    # Gráfico semanal
+│   │   ├── top-attendants.tsx  # Ranking de atendentes
+│   │   ├── recent-tickets.tsx  # Tickets recentes
+│   │   └── transcript-modal.tsx # Modal de transcript
+│   └── ui/                     # Componentes UI (shadcn)
+├── hooks/
+│   ├── use-mobile.ts           # Hook para mobile
+│   ├── use-realtime.ts         # Hook de conexão
+│   └── use-toast.ts            # Hook de notificações
+├── lib/
+│   ├── auth.ts                 # Funções de autenticação
+│   └── utils.ts                # Utilitários
+└── middleware.ts               # Middleware de autenticação
 ```
 
-## 🔌 API Endpoints
+## 🎨 Tecnologias
 
-Todas as rotas (exceto `/health` e `/ws`) requerem header `X-API-Secret`.
+- **Framework**: Next.js 16 (App Router)
+- **UI**: React 19 + Tailwind CSS 4
+- **Componentes**: shadcn/ui + Radix UI
+- **Gráficos**: Recharts
+- **Ícones**: Lucide React
+- **Autenticação**: Discord OAuth2
+- **Validação**: Zod
 
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| GET | `/health` | Status da API |
-| GET | `/status` | Status do bot |
-| GET | `/stats` | Estatísticas gerais |
-| GET | `/panels` | Lista painéis |
-| GET | `/panels/:id` | Detalhes do painel |
-| POST | `/panels` | Criar painel |
-| PUT | `/panels/:id` | Atualizar painel |
-| DELETE | `/panels/:id` | Deletar painel |
-| POST | `/deploy/:panelId` | Deploy do painel |
-| GET | `/tickets` | Lista tickets |
-| GET | `/tickets/:id/transcript` | Transcript do ticket |
-| GET | `/attendants` | Lista atendentes |
-| GET | `/logs` | Lista logs |
-| GET | `/settings` | Configurações |
-| PUT | `/settings` | Atualizar configurações |
+## 🔐 Segurança
 
-### WebSocket
-
-Conecte em `/ws?secret=SUA_API_SECRET` para receber eventos em tempo real.
-
-**Eventos:**
-- `connected` - Conexão estabelecida
-- `db_change` - Mudança no banco de dados
-- `pong` - Resposta ao ping
-
-## 🗄️ Models MongoDB
-
-### Panel
-
-```javascript
-{
-  guildId: String,
-  panelId: String,
-  name: String,
-  enabled: Boolean,
-  mode: 'channel' | 'thread',
-  options: [{ name, description }],
-  categoryId: String,
-  channelId: String,
-  roles: { staff, admin },
-  schedule: { enabled, open, close, closedDays, closedMessage },
-  messages: Object,
-  preferences: Object,
-  ai: { enabled, useContext, instructions }
-}
-```
-
-### Ticket
-
-```javascript
-{
-  guildId: String,
-  ticketId: Number,
-  channelId: String,
-  userId: String,
-  panelId: String,
-  optionIndex: Number,
-  optionName: String,
-  panelName: String,
-  mode: String,
-  status: 'open' | 'closed',
-  claimedBy: String,
-  priority: 'low' | 'medium' | 'high' | 'urgent',
-  rating: Number,
-  addedUsers: [String],
-  voiceChannelId: String,
-  createdAt: Date,
-  closedAt: Date,
-  closedBy: String,
-  lastActivity: Date
-}
-```
-
-### Transcript
-
-```javascript
-{
-  guildId: String,
-  channelId: String,
-  ticketId: Number,
-  userId: String,
-  closedBy: String,
-  messages: [{
-    id: String,
-    author: { id, username, displayName, avatar, bot },
-    content: String,
-    timestamp: String,
-    attachments: [{ name, url, contentType }],
-    embeds: [{ title, description, color }]
-  }],
-  messageCount: Number,
-  savedAt: Date
-}
-```
-
-### Log
-
-```javascript
-{
-  guildId: String,
-  type: String,
-  ticketId: Number,
-  channelId: String,
-  userId: String,
-  staffId: String,
-  details: Object,
-  timestamp: Date
-}
-```
-
-### Settings
-
-```javascript
-{
-  guildId: String,
-  channels: { logs, category },
-  roles: { staff, admin },
-  preferences: Object,
-  blacklist: [String]
-}
-```
-
-## 🎨 Preferências do Painel
-
-```javascript
-preferences: {
-  transcripts: Boolean,
-  dmNotify: Boolean,
-  rating: Boolean,
-  autoCloseInactive: Boolean,
-  autoCloseLeave: Boolean,
-  autoCloseSchedule: Boolean,
-  closeReason: Boolean,
-  closeDM: Boolean,
-  panelStyle: 'buttons' | 'select',
-  staffPanelStyle: 'buttons' | 'select',
-  memberPanelStyle: 'buttons' | 'select',
-  memberSetupDisabled: [String],
-  staffSetupDisabled: [String]
-}
-```
-
-## 🚀 Deploy
-
-### SquareCloud
-
-O arquivo `squarecloud.app` já está configurado:
-
-```
-MAIN=src/index.js
-MEMORY=512
-VERSION=recommended
-DISPLAY_NAME=Ticket Bot
-```
-
-### VPS/Docker
-
-```bash
-npm install --production
-node src/index.js
-```
+- Autenticação via Discord OAuth2
+- Sessões HTTP-only cookies
+- Validação de permissões por usuário
+- API protegida por secret key
+- Middleware de proteção de rotas
 
 ## 📝 Scripts
 
 ```bash
-npm start              # Iniciar o bot
-npm run reset-db       # Resetar database (cuidado!)
+pnpm dev      # Servidor de desenvolvimento
+pnpm build    # Build de produção
+pnpm start    # Iniciar produção
+pnpm lint     # Verificar código
 ```
 
 ## 🤝 Contribuindo
@@ -322,7 +247,4 @@ npm run reset-db       # Resetar database (cuidado!)
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT.
-#   a 
- 
- # a
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
