@@ -1,0 +1,7 @@
+DISPLAY_NAME=
+DESCRIPTION=
+MAIN=index.js
+MEMORY=256
+START=node .
+VERSION=recommended
+AUTORESTART=true

@@ -1,0 +1,28 @@
+{
+  "name": "ticket-bot",
+  "version": "2.0.0",
+  "description": "Discord Ticket Bot with MongoDB",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "migrate": "node src/scripts/migrate-to-mongodb.js"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "tickets",
+    "mongodb"
+  ],
+  "author": "Kayo/Tsvn",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/websocket": "^11.2.0",
+    "chalk": "^4.1.2",
+    "discord.js": "^14.16.3",
+    "dotenv": "^16.3.1",
+    "fastify": "^5.6.2",
+    "mongodb": "^6.21.0",
+    "mongoose": "^8.20.4"
+  }
+}
